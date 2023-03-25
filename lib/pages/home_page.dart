@@ -9,7 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var _timeInSec = 5;
+  var _timeInSec = 6;
   var isTimerActive = false;
 
   void counter() {
@@ -30,6 +30,12 @@ class _HomePageState extends State<HomePage> {
       });
     }
   }
+  String timerStatus(){
+    if(_timeInSec == 6 || _timeInSec < 0){
+      return 'START';
+    }
+    return _timeInSec.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +48,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                _timeInSec < 0 ? "DONE" : _timeInSec.toString(),
+                timerStatus(),
                 style: const TextStyle(fontSize: 100,fontWeight: FontWeight.w700 ,color: Colors.deepPurpleAccent),
               ),
               ElevatedButton(

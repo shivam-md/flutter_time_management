@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -30,6 +31,8 @@ class _HomePageState extends State<HomePage> {
       });
     }
   }
+  // returns START if timer has ended or yet to start.
+  // returns seconds remaining when Timer is active.
   String timerStatus(){
     if(_timeInSec == 6 || _timeInSec < 0){
       return 'START';
@@ -47,9 +50,12 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                timerStatus(),
-                style: const TextStyle(fontSize: 100,fontWeight: FontWeight.w700 ,color: Colors.deepPurpleAccent),
+              CircularPercentIndicator(radius: 300,
+              lineWidth: 40,
+                center: Text(
+                  timerStatus(),
+                  style: const TextStyle(fontSize: 100,fontWeight: FontWeight.w700 ,color: Colors.deepPurpleAccent),
+                ),
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(

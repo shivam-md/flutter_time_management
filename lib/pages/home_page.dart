@@ -12,6 +12,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var _timeInSec = 6;
   var isTimerActive = false;
+  // late double progress;
 
   void counter() {
 
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
         if(_timeInSec > -1){
           setState(() {
             _timeInSec--;
+            circularPercentProgress();
           });
         }
         else{
@@ -45,38 +47,83 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Container(
         padding: const EdgeInsets.all(20),
+        // decoration: BoxDecoration(
+        //   color: Colors.purple.shade50,
+        // ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircularPercentIndicator(radius: 300,
-              lineWidth: 40,
+              CircularPercentIndicator(
+                radius: 140,
+                animation: true,
+                animateFromLastPercent: true,
+                animationDuration: 50,
+                lineWidth: 35,
+                backgroundColor: Colors.deepPurpleAccent.shade100,
+                progressColor: Colors.deepPurpleAccent.shade700,
+                circularStrokeCap: CircularStrokeCap.round,
+                percent: circularPercentProgress(),
                 center: Text(
                   timerStatus(),
-                  style: const TextStyle(fontSize: 100,fontWeight: FontWeight.w700 ,color: Colors.deepPurpleAccent),
+                  style: const TextStyle(fontSize: 50,fontWeight: FontWeight.w900 ,color: Colors.deepPurpleAccent),
                 ),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurpleAccent,
-                ),
-                onPressed: () {
-                  counter();
-                  debugPrint("button pressed");
-                },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-                  child: Text(
-                    "Start Timer",
-                    style: TextStyle(fontSize: 20, color: Colors.white),
+              Column(
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurpleAccent,
+                    ),
+                    onPressed: () {
+                      counter();
+                      debugPrint(" start button pressed");
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                      child: Text(
+                        "S T A R T   T I M E R",
+                        style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w900),
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                  const SizedBox(height: 30,),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurpleAccent,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _timeInSec = -1;
+                      });
+                      debugPrint(" end timer button pressed");
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 42),
+                      child: Text(
+                        "E N D   T I M E R",
+                        style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w900),
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
       ),
     );
+  }
+  // tracks progress of counter.
+  double circularPercentProgress(){
+    // make animation value go in ascending order.
+    var timeInSec = 5 - _timeInSec;
+
+    // if timer has started and has not ended (> -1).
+    if(_timeInSec >= 0 && _timeInSec < 6) return (timeInSec/5);
+
+    // if timer is either completed or yet to start
+    return 0.00;
   }
 }

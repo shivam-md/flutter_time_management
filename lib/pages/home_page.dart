@@ -126,4 +126,13 @@ class _HomePageState extends State<HomePage> {
     // if timer is either completed or yet to start
     return 0.00;
   }
+
+  Widget? showPomodoroTimer(){
+    int timeInSeconds = 25*60;
+
+    if(timeInSeconds == 0 || timeInSeconds == 25*60){
+      return IconButton(onPressed: (){}, icon: Icon(Icons.play_arrow));
+    }
+
+  }
 }
